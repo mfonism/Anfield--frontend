@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { first, map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +8,7 @@ import { first, map } from 'rxjs/operators';
 export class TrophiesService {
   constructor(private httpClient: HttpClient) {}
 
-  listTrophies() {
-    return 'Listing trophies from service!';
+  listTrophies(): Observable<string> {
+    return of('Listing trophies from service!');
   }
 }
