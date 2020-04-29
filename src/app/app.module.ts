@@ -10,9 +10,9 @@ import { SharedModule } from '@shared';
 import { HomeModule } from './home/home.module';
 import { ShellModule } from './shell/shell.module';
 import { AboutModule } from './about/about.module';
+import { TrophiesModule } from './trophies/trophies.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { TrophiesComponent } from './trophies/trophies.component';
 
 @NgModule({
   imports: [
@@ -26,9 +26,10 @@ import { TrophiesComponent } from './trophies/trophies.component';
     ShellModule,
     HomeModule,
     AboutModule,
+    TrophiesModule,
     AppRoutingModule, // must be imported as the last module as it contains the fallback route
   ],
-  declarations: [AppComponent, TrophiesComponent],
+  declarations: [AppComponent],
   providers: [],
   bootstrap: [AppComponent],
 })
