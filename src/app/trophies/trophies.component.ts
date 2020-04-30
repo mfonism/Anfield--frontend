@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { map } from 'rxjs/operators';
 
 import { TrophiesService } from './trophies.service';
 
@@ -8,11 +9,15 @@ import { TrophiesService } from './trophies.service';
   styleUrls: ['./trophies.component.scss'],
 })
 export class TrophiesComponent implements OnInit {
+  trophies: Array<any>;
+
   constructor(private trophiesService: TrophiesService) {}
 
-  ngOnInit(): void {}
-
-  listTrophies() {
-    return this.trophiesService.listTrophies();
+  ngOnInit(): void {
+    this.trophiesService.listTrophies().subscribe((data) => {
+      this.trophies = data;
+      console.log(this.trophies);
+      return data;
+    });
   }
 }

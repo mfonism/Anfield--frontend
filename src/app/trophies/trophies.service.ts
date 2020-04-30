@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +9,7 @@ import { Observable, of } from 'rxjs';
 export class TrophiesService {
   constructor(private httpClient: HttpClient) {}
 
-  listTrophies(): Observable<string> {
-    return of('Listing trophies from service!');
+  listTrophies(): Observable<any> {
+    return this.httpClient.get('/trophies').pipe(map((resp: any) => resp.data));
   }
 }
