@@ -1,0 +1,16 @@
+{
+  "/api/jokes": {
+    "target": "https://api.chucknorris.io",
+    "pathRewrite": {
+      "^/api": ""
+    },
+    "changeOrigin": true,
+    "secure": false,
+    "logLevel": "debug"
+  },
+  "/api": {
+    "target": "http://localhost:4100",
+    "secure": false,
+    "logLevel": "debug"
+  }
+}
