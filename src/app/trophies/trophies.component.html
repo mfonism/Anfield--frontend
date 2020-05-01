@@ -3,9 +3,10 @@
     <div *ngFor="let trophy of trophies" class="col-10 col-sm-6 col-md-5 col-lg-4 mb-4">
       <div class="card">
         <img class="card-img-top" src="assets/img/placeholder.png" alt="..." />
-        <div class="card-body">
+        <div class="card-body text-center">
           <h6 class="card-title">{{ trophy.tournament }}</h6>
           <p class="card-text">{{ trophy.place }}, {{ trophy.year }}</p>
+          <a [routerLink]="['/trophies', trophy.id]" class="btn btn-sm btn-block btn-outline-primary">More</a>
         </div>
       </div>
     </div>
