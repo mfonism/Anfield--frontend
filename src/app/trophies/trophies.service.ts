@@ -14,4 +14,8 @@ export class TrophiesService {
   listTrophies(): Observable<ITrophy[]> {
     return this.httpClient.get('/trophies').pipe(map((resp: any) => resp.data));
   }
+
+  getTrophy(trophyId: string): Observable<ITrophy> {
+    return this.httpClient.get(`/trophies/${trophyId}`).pipe(map((resp: any) => resp.data));
+  }
 }
