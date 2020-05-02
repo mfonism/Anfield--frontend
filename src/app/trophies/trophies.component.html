@@ -1,4 +1,4 @@
-<div class="container">
+<div [hidden]="isLoading" class="container">
   <div class="row justify-content-center">
     <div *ngFor="let trophy of trophies" class="col-10 col-sm-6 col-md-5 col-lg-4 mb-4">
       <div class="card">
@@ -11,4 +11,7 @@
       </div>
     </div>
   </div>
+</div>
+<div [hidden]="!isLoading" class="container text-center mt-5">
+  <app-loader [isLoading]="isLoading"></app-loader>
 </div>
