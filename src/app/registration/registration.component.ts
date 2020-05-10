@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { MustMatch } from './validators';
+import { emailPattern, MustMatch } from './validators';
 
 @Component({
   selector: 'app-registration',
@@ -17,7 +17,7 @@ export class RegistrationComponent implements OnInit {
   ngOnInit(): void {
     this.registrationForm = this.formBuilder.group(
       {
-        email: ['', [Validators.required, Validators.email]],
+        email: ['', [Validators.required, Validators.pattern(emailPattern)]],
         password: ['', [Validators.required, Validators.minLength(8)]],
         confirmPassword: ['', Validators.required],
       },
