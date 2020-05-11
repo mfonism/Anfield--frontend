@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+import { RegistrationService } from './registration.service';
 import { emailPattern, MustMatch } from './validators';
 
 @Component({
@@ -12,7 +13,7 @@ export class RegistrationComponent implements OnInit {
   registrationForm: FormGroup;
   submitted = false;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder, private registrationService: RegistrationService) {}
 
   ngOnInit(): void {
     this.registrationForm = this.formBuilder.group(
@@ -36,10 +37,9 @@ export class RegistrationComponent implements OnInit {
     this.submitted = true;
 
     if (this.registrationForm.invalid) {
-      alert('INVALID DATA');
       return;
     }
 
-    alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.registrationForm.value, null, 4));
+    this.registrationService.register(this.f.email.value, this.f.password.value);
   }
 }
