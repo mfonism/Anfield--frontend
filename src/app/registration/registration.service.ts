@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { from } from 'rxjs';
 
 import firebase from '../firebase-setup';
 
@@ -13,16 +14,21 @@ export class RegistrationService {
   }
 
   register(email: string, password: string) {
-    return this.firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then((result: any) => {
-        window.alert('You have been successfully registered!');
-        console.log(result.user);
-      })
-      .catch((error: any) => {
+    return from(this.firebase.auth().createUserWithEmailAndPassword(email, password)).subscribe(
+      (data: any) => {
+        window.alert('Successfully registered');
+        console.log(typeof data);
+        console.log(typeof data.user);
+        console.log(data);
+        console.log(data.user);
+      },
+      (error: any) => {
         window.alert(error.message);
+        console.log(typeof error);
+        console.log(typeof error.message);
         console.log(error);
-      });
+        console.log(error.message);
+      }
+    );
   }
 }
