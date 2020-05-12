@@ -40,6 +40,23 @@ export class RegistrationComponent implements OnInit {
       return;
     }
 
-    this.registrationService.register(this.f.email.value, this.f.password.value);
+    this.register(this.f.email.value, this.f.password.value);
+  }
+
+  register(email: string, password: string) {
+    this.registrationService.register(email, password).subscribe(
+      (data: any) => {
+        console.log('Successfully registered');
+        this.sendEmailVerification();
+        window.alert('Verification email sent');
+      },
+      (error: any) => {
+        console.log(error);
+      }
+    );
+  }
+
+  sendEmailVerification() {
+    this.registrationService.sendEmailVerification();
   }
 }
