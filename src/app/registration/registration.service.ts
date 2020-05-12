@@ -21,6 +21,8 @@ export class RegistrationService {
         console.log(typeof data.user);
         console.log(data);
         console.log(data.user);
+        console.log(this.firebase.auth().currentUser);
+        this.firebase.auth().currentUser.sendEmailVerification();
       },
       (error: any) => {
         window.alert(error.message);
