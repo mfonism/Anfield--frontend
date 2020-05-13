@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { finalize } from 'rxjs/operators';
 
 import { RegistrationService } from './registration.service';
 import { emailPattern, MustMatch } from './validators';
@@ -11,7 +12,8 @@ import { emailPattern, MustMatch } from './validators';
 })
 export class RegistrationComponent implements OnInit {
   registrationForm: FormGroup;
-  submitted = false;
+  isLoading: boolean = false;
+  submitted: boolean = false;
 
   constructor(private formBuilder: FormBuilder, private registrationService: RegistrationService) {}
 
@@ -35,8 +37,10 @@ export class RegistrationComponent implements OnInit {
 
   onSubmit(): void {
     this.submitted = true;
+    this.isLoading = true;
 
     if (this.registrationForm.invalid) {
+      this.isLoading = false;
       return;
     }
 
@@ -44,16 +48,23 @@ export class RegistrationComponent implements OnInit {
   }
 
   register(email: string, password: string): void {
-    this.registrationService.register(email, password).subscribe(
-      (data: any) => {
-        console.log('Successfully registered');
-        this.sendEmailVerification();
-        window.alert('Verification email sent');
-      },
-      (error: any) => {
-        console.log(error);
-      }
-    );
+    this.registrationService
+      .register(email, password)
+      .pipe(
+        finalize(() => {
+          this.isLoading = false;
+        })
+      )
+      .subscribe(
+        (data: any) => {
+          console.log('Successfully registered');
+          this.sendEmailVerification();
+          window.alert('Verification email sent');
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      );
   }
 
   sendEmailVerification(): void {

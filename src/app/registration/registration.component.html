@@ -48,8 +48,13 @@
                 </div>
               </div>
             </div>
-            <div class="text-center">
-              <button class="btn btn-primary mr-1">Register</button>
+            <div [hidden]="isLoading" class="text-center">
+              <button class="btn btn-primary mr-1">
+                <span>Register</span>
+              </button>
+            </div>
+            <div [hidden]="!isLoading" class="text-center">
+              <app-loader [isLoading]="isLoading" class="bg-primary"></app-loader>
             </div>
           </form>
         </div>
