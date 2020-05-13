@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { from } from 'rxjs';
+import { from, Observable } from 'rxjs';
 
 import firebase from '../firebase-setup';
 
@@ -13,11 +13,11 @@ export class RegistrationService {
     this.firebase = firebase;
   }
 
-  register(email: string, password: string) {
+  register(email: string, password: string): Observable<any> {
     return from(this.firebase.auth().createUserWithEmailAndPassword(email, password));
   }
 
-  sendEmailVerification() {
+  sendEmailVerification(): Observable<any> {
     return from(this.firebase.auth().currentUser.sendEmailVerification());
   }
 }

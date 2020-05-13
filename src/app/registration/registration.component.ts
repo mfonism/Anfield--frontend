@@ -33,7 +33,7 @@ export class RegistrationComponent implements OnInit {
     return this.registrationForm.controls;
   }
 
-  onSubmit() {
+  onSubmit(): void {
     this.submitted = true;
 
     if (this.registrationForm.invalid) {
@@ -43,7 +43,7 @@ export class RegistrationComponent implements OnInit {
     this.register(this.f.email.value, this.f.password.value);
   }
 
-  register(email: string, password: string) {
+  register(email: string, password: string): void {
     this.registrationService.register(email, password).subscribe(
       (data: any) => {
         console.log('Successfully registered');
@@ -56,7 +56,7 @@ export class RegistrationComponent implements OnInit {
     );
   }
 
-  sendEmailVerification() {
+  sendEmailVerification(): void {
     this.registrationService.sendEmailVerification();
   }
 }
