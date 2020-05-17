@@ -3,9 +3,21 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { Shell } from '@app/shell/shell.service';
 import { RegistrationComponent } from './registration.component';
+import { EmailVerificationComponent } from './email-verification/email-verification.component';
 
 const routes: Routes = [
-  Shell.childRoutes([{ path: 'register', component: RegistrationComponent, data: { title: 'Register' } }]),
+  Shell.childRoutes([
+    {
+      path: 'register',
+      component: RegistrationComponent,
+      data: { title: 'Register' },
+    },
+    {
+      path: 'verify-email',
+      component: EmailVerificationComponent,
+      data: { title: 'Verify Email' },
+    },
+  ]),
 ];
 
 @NgModule({

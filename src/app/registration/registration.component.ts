@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 
 import { RegistrationService } from './registration.service';
@@ -15,7 +16,11 @@ export class RegistrationComponent implements OnInit {
   isLoading: boolean = false;
   submitted: boolean = false;
 
-  constructor(private formBuilder: FormBuilder, private registrationService: RegistrationService) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private registrationService: RegistrationService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.registrationForm = this.formBuilder.group(
@@ -57,12 +62,11 @@ export class RegistrationComponent implements OnInit {
       )
       .subscribe(
         (data: any) => {
-          console.log('Successfully registered');
           this.sendEmailVerification();
-          window.alert('Verification email sent');
+          this.router.navigate(['/verify-email'], { state: { email: email } });
         },
         (error: any) => {
-          console.log(error);
+          return;
         }
       );
   }
