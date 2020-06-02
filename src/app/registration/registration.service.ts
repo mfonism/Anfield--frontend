@@ -20,4 +20,8 @@ export class RegistrationService {
   sendEmailVerification(): Observable<any> {
     return from(this.firebase.auth().currentUser.sendEmailVerification());
   }
+
+  signIn(email: string, password: string): Observable<any> {
+    return from(this.firebase.auth().signInWithEmailAndPassword(email, password));
+  }
 }
