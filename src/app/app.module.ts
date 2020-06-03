@@ -11,7 +11,7 @@ import { HomeModule } from './home/home.module';
 import { ShellModule } from './shell/shell.module';
 import { AboutModule } from './about/about.module';
 import { TrophiesModule } from './trophies/trophies.module';
-import { RegistrationModule } from './registration/registration.module';
+import { AuthModule } from './auth/auth.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
@@ -28,7 +28,7 @@ import { AppRoutingModule } from './app-routing.module';
     HomeModule,
     AboutModule,
     TrophiesModule,
-    RegistrationModule,
+    AuthModule,
     AppRoutingModule, // must be imported as the last module as it contains the fallback route
   ],
   declarations: [AppComponent],

@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 
-import { RegistrationService } from './registration.service';
-import { emailPattern, MustMatch } from './validators';
+import { AuthService } from '../auth.service';
+import { emailPattern, MustMatch } from '../validators';
 
 @Component({
   selector: 'app-registration',
@@ -17,11 +17,7 @@ export class RegistrationComponent implements OnInit {
   submitted: boolean = false;
   registrationError: string = '';
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private registrationService: RegistrationService,
-    private router: Router
-  ) {}
+  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.registrationForm = this.formBuilder.group(
@@ -55,7 +51,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   register(email: string, password: string): void {
-    this.registrationService
+    this.authService
       .register(email, password)
       .pipe(
         finalize(() => {
@@ -75,6 +71,6 @@ export class RegistrationComponent implements OnInit {
   }
 
   sendEmailVerification(): void {
-    this.registrationService.sendEmailVerification();
+    this.authService.sendEmailVerification();
   }
 }

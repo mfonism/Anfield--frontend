@@ -6,7 +6,7 @@ import firebase from '../firebase-setup';
 @Injectable({
   providedIn: 'root',
 })
-export class RegistrationService {
+export class AuthService {
   private firebase: any;
 
   constructor() {

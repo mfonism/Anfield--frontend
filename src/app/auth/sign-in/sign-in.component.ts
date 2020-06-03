@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 
-import { RegistrationService } from '../registration.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -16,11 +16,7 @@ export class SignInComponent implements OnInit {
   submitted: boolean = false;
   signInError: string = '';
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private registrationService: RegistrationService,
-    private router: Router
-  ) {}
+  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.signInForm = this.formBuilder.group({
@@ -53,7 +49,7 @@ export class SignInComponent implements OnInit {
   }
 
   signIn(email: string, password: string): void {
-    this.registrationService
+    this.authService
       .signIn(email, password)
       .pipe(
         finalize(() => {
