@@ -27,6 +27,12 @@ export class SignInComponent implements OnInit {
       email: ['', Validators.required],
       password: ['', Validators.required],
     });
+
+    var cachedEmail: string = window.localStorage.getItem('emailForSignIn');
+    if (cachedEmail) {
+      this.f.email.setValue(cachedEmail);
+      window.localStorage.removeItem('emailForSignIn');
+    }
   }
 
   get f() {

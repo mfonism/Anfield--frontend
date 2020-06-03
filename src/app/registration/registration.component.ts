@@ -64,8 +64,8 @@ export class RegistrationComponent implements OnInit {
       )
       .subscribe(
         (data: any) => {
+          window.localStorage.setItem('emailForSignIn', email);
           this.sendEmailVerification();
-          console.log(data);
           this.router.navigate(['/verify-email'], { state: { email: email } });
         },
         (error: any) => {
