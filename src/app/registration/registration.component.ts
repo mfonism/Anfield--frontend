@@ -15,6 +15,7 @@ export class RegistrationComponent implements OnInit {
   registrationForm: FormGroup;
   isLoading: boolean = false;
   submitted: boolean = false;
+  registrationError: string = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -43,6 +44,7 @@ export class RegistrationComponent implements OnInit {
   onSubmit(): void {
     this.submitted = true;
     this.isLoading = true;
+    this.registrationError = '';
 
     if (this.registrationForm.invalid) {
       this.isLoading = false;
@@ -63,10 +65,11 @@ export class RegistrationComponent implements OnInit {
       .subscribe(
         (data: any) => {
           this.sendEmailVerification();
+          console.log(data);
           this.router.navigate(['/verify-email'], { state: { email: email } });
         },
         (error: any) => {
-          return;
+          this.registrationError = error;
         }
       );
   }

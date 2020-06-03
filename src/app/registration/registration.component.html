@@ -48,6 +48,7 @@
                 </div>
               </div>
             </div>
+            <div [hidden]="!registrationError" class="alert alert-warning">{{ registrationError }}</div>
             <div [hidden]="isLoading" class="text-center">
               <button class="btn btn-primary mr-1">
                 <span>Register</span>
