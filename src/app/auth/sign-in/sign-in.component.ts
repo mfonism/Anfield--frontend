@@ -16,7 +16,24 @@ export class SignInComponent implements OnInit {
   submitted: boolean = false;
   signInError: string = '';
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {}
+  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {
+    if (this.authService.isUserSignedIn()) {
+      // is registered * is verified * is signed-in
+      // stay signed in
+      this.router.navigate(['/trophies']);
+    } else if (this.authService.isUserEmailVerified()) {
+      // is registered * is verified
+      // not signed-in
+      // can sign in
+    } else if (this.authService.isUserRegistered()) {
+      // is registered
+      // not signed-in
+      // can sign in
+    } else {
+      // not signed-in
+      // can sign in
+    }
+  }
 
   ngOnInit(): void {
     this.signInForm = this.formBuilder.group({
