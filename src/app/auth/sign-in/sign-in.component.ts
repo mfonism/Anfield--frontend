@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 
 import { AuthService } from '../auth.service';
@@ -11,12 +11,19 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./sign-in.component.scss'],
 })
 export class SignInComponent implements OnInit {
+  next_url: string;
+
   signInForm: FormGroup;
   isLoading: boolean = false;
   submitted: boolean = false;
   signInError: string = '';
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router
+  ) {
     if (this.authService.isUserSignedIn()) {
       // is registered * is verified * is signed-in
       // stay signed in
@@ -36,6 +43,9 @@ export class SignInComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.activatedRoute.queryParams.subscribe((params: Params) => {
+      this.next_url = params['next'];
+    });
     this.signInForm = this.formBuilder.group({
       email: ['', Validators.required],
       password: ['', Validators.required],
@@ -75,7 +85,10 @@ export class SignInComponent implements OnInit {
       )
       .subscribe(
         (data: any) => {
-          this.router.navigate(['/trophies']);
+          if (this.next_url) {
+            return this.router.navigate([this.next_url]);
+          }
+          return this.router.navigate(['/trophies']);
         },
         (error: any) => {
           this.signInError = error;
