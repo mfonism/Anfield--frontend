@@ -17,7 +17,24 @@ export class RegistrationComponent implements OnInit {
   submitted: boolean = false;
   registrationError: string = '';
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {}
+
+  ngOnInit(): void {
+    this.routeBasedOnAuthUserState();
+
+    this.registrationForm = this.formBuilder.group(
+      {
+        email: ['', [Validators.required, Validators.pattern(emailPattern)]],
+        password: ['', [Validators.required, Validators.minLength(8)]],
+        confirmPassword: ['', Validators.required],
+      },
+      {
+        validator: MustMatch('password', 'confirmPassword'),
+      }
+    );
+  }
+
+  routeBasedOnAuthUserState() {
     if (this.authService.isUserSignedIn()) {
       // is registered * is verified * is signed-in
       // stay signed in
@@ -33,19 +50,6 @@ export class RegistrationComponent implements OnInit {
     } else {
       // can register
     }
-  }
-
-  ngOnInit(): void {
-    this.registrationForm = this.formBuilder.group(
-      {
-        email: ['', [Validators.required, Validators.pattern(emailPattern)]],
-        password: ['', [Validators.required, Validators.minLength(8)]],
-        confirmPassword: ['', Validators.required],
-      },
-      {
-        validator: MustMatch('password', 'confirmPassword'),
-      }
-    );
   }
 
   // convenience getter for easy access to form fields

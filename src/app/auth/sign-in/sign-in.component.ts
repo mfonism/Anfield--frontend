@@ -23,7 +23,27 @@ export class SignInComponent implements OnInit {
     private authService: AuthService,
     private activatedRoute: ActivatedRoute,
     private router: Router
-  ) {
+  ) {}
+
+  ngOnInit(): void {
+    this.routeBasedOnAuthUserState();
+
+    this.activatedRoute.queryParams.subscribe((params: Params) => {
+      this.next_url = params['next'];
+    });
+    this.signInForm = this.formBuilder.group({
+      email: ['', Validators.required],
+      password: ['', Validators.required],
+    });
+
+    var cachedEmail: string = window.localStorage.getItem('emailForSignIn');
+    if (cachedEmail) {
+      this.f.email.setValue(cachedEmail);
+      window.localStorage.removeItem('emailForSignIn');
+    }
+  }
+
+  routeBasedOnAuthUserState() {
     if (this.authService.isUserSignedIn()) {
       // is registered * is verified * is signed-in
       // stay signed in
@@ -39,22 +59,6 @@ export class SignInComponent implements OnInit {
     } else {
       // not signed-in
       // can sign in
-    }
-  }
-
-  ngOnInit(): void {
-    this.activatedRoute.queryParams.subscribe((params: Params) => {
-      this.next_url = params['next'];
-    });
-    this.signInForm = this.formBuilder.group({
-      email: ['', Validators.required],
-      password: ['', Validators.required],
-    });
-
-    var cachedEmail: string = window.localStorage.getItem('emailForSignIn');
-    if (cachedEmail) {
-      this.f.email.setValue(cachedEmail);
-      window.localStorage.removeItem('emailForSignIn');
     }
   }
 
@@ -86,9 +90,9 @@ export class SignInComponent implements OnInit {
       .subscribe(
         (data: any) => {
           if (this.next_url) {
-            return this.router.navigate([this.next_url]);
+            this.router.navigate([this.next_url]);
           }
-          return this.router.navigate(['/trophies']);
+          this.router.navigate(['/trophies']);
         },
         (error: any) => {
           this.signInError = error;

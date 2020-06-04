@@ -11,7 +11,15 @@ import { AuthService } from '../auth.service';
 export class EmailVerificationComponent implements OnInit {
   email: string;
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService, private router: Router) {}
+
+  ngOnInit(): void {
+    this.routeBasedOnAuthUserState();
+
+    this.email = history.state.email || 'the email address you provided';
+  }
+
+  routeBasedOnAuthUserState() {
     if (this.authService.isUserSignedIn()) {
       // is registered * is verified * is signed-in
       // already verified
@@ -27,9 +35,5 @@ export class EmailVerificationComponent implements OnInit {
       // needs register
       this.router.navigate(['/register']);
     }
-  }
-
-  ngOnInit(): void {
-    this.email = history.state.email || 'the email address you provided';
   }
 }
